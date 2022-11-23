@@ -2,7 +2,7 @@ services:
   spin-clouddriver:
     container_name: spin-clouddriver
     environment:
-      - "SPRING_PROFILES_ACTIVE=local"
+      SPRING_PROFILES_ACTIVE: local
     image: gcr.io/spinnaker-marketplace/clouddriver:6.3.0-20190904130744
     volumes:
       - ./config/clouddriver.yml:/opt/spinnaker/config/clouddriver.yml
@@ -26,8 +26,8 @@ services:
   spin-echo:
     container_name: spin-echo
     environment:
-      - "JAVA_OPTS=-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2"
-      - "SPRING_PROFILES_ACTIVE=local"
+      JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
+      SPRING_PROFILES_ACTIVE: local
     image: gcr.io/spinnaker-marketplace/echo:2.7.0-20190904112813
     volumes:
       - ./config/echo.yml:/opt/spinnaker/config/echo.yml
@@ -40,19 +40,20 @@ services:
   spin-front50:
     container_name: spin-front50
     environment:
-      - "JAVA_OPTS=-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2"
+      JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
     image: gcr.io/spinnaker-marketplace/front50:0.19.0-20190904130744
     volumes:
       - ./config/front50.yml:/opt/spinnaker/config/front50.yml
       - ./config/spinnaker.yml:/opt/spinnaker/config/spinnaker.yml
     ports:
       - "8080:8080"
-    links:
+    links
+      - spin-mysql
       - spin-redis
   spin-gate:
     container_name: spin-gate
     environment:
-      - "SPRING_PROFILES_ACTIVE=local"
+      SPRING_PROFILES_ACTIVE: local
     image: gcr.io/spinnaker-marketplace/gate:1.11.0-20190904112813
     volumes:
       - ./config/gate.yml:/opt/spinnaker/config/gate.yml
@@ -77,8 +78,8 @@ services:
   spin-orca:
     container_name: spin-orca
     environment:
-      - "JAVA_OPTS=-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2"
-      - "SPRING_PROFILES_ACTIVE=local"
+      JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
+      SPRING_PROFILES_ACTIVE: local
     image: gcr.io/spinnaker-marketplace/orca:2.9.0-20190904130744
     volumes:
       - ./config/orca.yml:/opt/spinnaker/config/orca.yml
@@ -109,7 +110,7 @@ services:
     ports:
       - "8087:8087"
     environment:
-      - "JAVA_OPTS=-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2"
+      JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
   spin-fiat:
     container_name: spin-fiat
     image: gcr.io/spinnaker-marketplace/fiat:1.7.0-20190904130744
@@ -121,3 +122,15 @@ services:
       - spin-front50
     ports:
       - "7003:7003"
+  spin-mysql:
+    container_name: spin-mysql
+    image: mysql:5.7.22
+    #command: sh -c 'exec mysql -uroot --password=spinnaker' < sql/front50_mysql.sql
+    #command: --init-file sql/front50_mysql.sql
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d/
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: spinnaker
+      TZ: Asia/Shanghai
