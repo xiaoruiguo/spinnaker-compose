@@ -49,3 +49,7 @@ hystrix:
     DefaultPipelineDAO:
       coreSize: 25
       maxQueueSize: 100
+
+spring:
+  liquibase:
+    change-log: classpath:db/changelog/changelog-master.yml
