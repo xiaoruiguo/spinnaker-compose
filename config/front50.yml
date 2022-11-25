@@ -24,13 +24,13 @@ sql:
   connectionPools:
     default:
       default: true
-      jdbcUrl: jdbc:mysql://spin-mysql:3306/front50
+      jdbcUrl: jdbc:mysql://spin-mysql:3306/front50?enabledTLSProtocols=TLSv1.2
       user: root
       password: spinnaker
   migration:
     user: root
     password: spinnaker
-    jdbcUrl: jdbc:mysql://spin-mysql:3306/front50
+    jdbcUrl: jdbc:mysql://spin-mysql:3306/front50?enabledTLSProtocols=TLSv1.2
 
 server:
   port: ${services.front50.port:8080}
