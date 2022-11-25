@@ -8,7 +8,8 @@ services:
       - ./config/clouddriver.yml:/opt/spinnaker/config/clouddriver.yml
       - ./config/spinnaker.yml:/opt/spinnaker/config/spinnaker.yml
       - ./serviceaccount:/var/run/secrets/kubernetes.io/serviceaccount
-    links:
+#    links:
+    depends_on:
       - spin-redis
     ports:
       - "7002:7002"
@@ -16,7 +17,7 @@ services:
       network:
         ipv4_address: 10.5.0.15        
     extra_hosts:
-      #- "spin-clouddriver:10.5.0.15"
+      - "spin-clouddriver:10.5.0.15"
       - "spin-deck:10.5.0.14"
       - "spin-echo:10.5.0.13"
       - "spin-front50:10.5.0.12"
@@ -44,7 +45,7 @@ services:
         ipv4_address: 10.5.0.14        
     extra_hosts:
       - "spin-clouddriver:10.5.0.15"
-      #- "spin-deck:10.5.0.14"
+      - "spin-deck:10.5.0.14"
       - "spin-echo:10.5.0.13"
       - "spin-front50:10.5.0.12"
       - "spin-gate:10.5.0.11"
@@ -67,7 +68,7 @@ services:
       - ./config/spinnaker.yml:/opt/spinnaker/config/spinnaker.yml
     ports:
       - "8089:8089"
-    links:
+    depends_on:
       - spin-front50
       - spin-orca
     networks:
@@ -76,7 +77,7 @@ services:
     extra_hosts:
       - "spin-clouddriver:10.5.0.15"
       - "spin-deck:10.5.0.14"
-      #- "spin-echo:10.5.0.13"
+      - "spin-echo:10.5.0.13"
       - "spin-front50:10.5.0.12"
       - "spin-gate:10.5.0.11"
       - "spin-igor:10.5.0.10"
@@ -97,7 +98,7 @@ services:
       - ./config/spinnaker.yml:/opt/spinnaker/config/spinnaker.yml
     ports:
       - "8080:8080"
-    links:
+    depends_on:
       - spin-redis
       - spin-mysql
     networks:
@@ -107,7 +108,7 @@ services:
       - "spin-clouddriver:10.5.0.15"
       - "spin-deck:10.5.0.14"
       - "spin-echo:10.5.0.13"
-      #- "spin-front50:10.5.0.12"
+      - "spin-front50:10.5.0.12"
       - "spin-gate:10.5.0.11"
       - "spin-igor:10.5.0.10"
       - "spin-orca:10.5.0.9"
@@ -123,7 +124,7 @@ services:
     volumes:
         - ./config/gate.yml:/opt/spinnaker/config/gate.yml
         - ./config/spinnaker.yml:/opt/spinnaker/config/spinnaker.yml
-    links:
+    depends_on:
       - spin-redis
       - spin-clouddriver
       - spin-echo
@@ -140,7 +141,7 @@ services:
       - "spin-deck:10.5.0.14"
       - "spin-echo:10.5.0.13"
       - "spin-front50:10.5.0.12"
-      #- "spin-gate:10.5.0.11"
+      - "spin-gate:10.5.0.11"
       - "spin-igor:10.5.0.10"
       - "spin-orca:10.5.0.9"
       - "spin-redis:10.5.0.8"
@@ -153,7 +154,7 @@ services:
     volumes:
       - ./config/config/igor.yml:/opt/spinnaker/config/igor.yml
       - ./config/spinnaker.yml:/opt/spinnaker/config/spinnaker.yml
-    links:
+    depends_on:
       - spin-redis
       - spin-echo
     ports:
@@ -167,7 +168,7 @@ services:
       - "spin-echo:10.5.0.13"
       - "spin-front50:10.5.0.12"
       - "spin-gate:10.5.0.11"
-      #- "spin-igor:10.5.0.10"
+      - "spin-igor:10.5.0.10"
       - "spin-orca:10.5.0.9"
       - "spin-redis:10.5.0.8"
       - "spin-rosco:10.5.0.7"
@@ -185,7 +186,7 @@ services:
       - ./config/orca.yml:/opt/spinnaker/config/orca.yml
       - ./config/spinnaker.yml:/opt/spinnaker/config/spinnaker.yml
       - ./config/plugins.yml:/opt/spinnaker/config/plugins.yml
-    links:
+    depends_on:
       - spin-redis
       - spin-clouddriver
       - spin-front50
@@ -202,7 +203,7 @@ services:
       - "spin-front50:10.5.0.12"
       - "spin-gate:10.5.0.11"
       - "spin-igor:10.5.0.10"
-      #- "spin-orca:10.5.0.9"
+      - "spin-orca:10.5.0.9"
       - "spin-redis:10.5.0.8"
       - "spin-rosco:10.5.0.7"
       - "spin-fiat:10.5.0.6"
@@ -225,7 +226,7 @@ services:
       - "spin-gate:10.5.0.11"
       - "spin-igor:10.5.0.10"
       - "spin-orca:10.5.0.9"
-      #- "spin-redis:10.5.0.8"
+      - "spin-redis:10.5.0.8"
       - "spin-rosco:10.5.0.7"
       - "spin-fiat:10.5.0.6"
       - "spin-mysql:10.5.0.5" 
@@ -235,7 +236,7 @@ services:
     volumes:
       - ./config/rosco.yml:/opt/spinnaker/config/rosco.yml
       - ./config/spinnaker.yml:/opt/spinnaker/config/spinnaker.yml
-    links:
+    depends_on:
       - spin-redis
     ports:
       - "8087:8087"
@@ -255,7 +256,7 @@ services:
       - "spin-igor:10.5.0.10"
       - "spin-orca:10.5.0.9"
       - "spin-redis:10.5.0.8"
-      #- "spin-rosco:10.5.0.7"
+      - "spin-rosco:10.5.0.7"
       - "spin-fiat:10.5.0.6"
       - "spin-mysql:10.5.0.5" 
   spin-fiat:
@@ -263,7 +264,7 @@ services:
     image: spinnaker/fiat
     volumes:
       - ./config/spinnaker.yml:/opt/spinnaker/config/spinnaker.yml
-    links:
+    depends_on:
       - spin-redis
       - spin-clouddriver
       - spin-front50
@@ -282,7 +283,7 @@ services:
       - "spin-orca:10.5.0.9"
       - "spin-redis:10.5.0.8"
       - "spin-rosco:10.5.0.7"
-      #- "spin-fiat:10.5.0.6"
+      - "spin-fiat:10.5.0.6"
       - "spin-mysql:10.5.0.5" 
   spin-mysql:
     container_name: spin-mysql
@@ -312,7 +313,7 @@ services:
       - "spin-redis:10.5.0.8"
       - "spin-rosco:10.5.0.7"
       - "spin-fiat:10.5.0.6"
-      #- "spin-mysql:10.5.0.5"
+      - "spin-mysql:10.5.0.5"
 networks:
   network:
     driver: bridge
