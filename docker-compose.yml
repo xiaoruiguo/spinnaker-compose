@@ -16,7 +16,7 @@ services:
       network:
         ipv4_address: 10.5.0.15        
     extra_hosts:
-      - "spin-clouddriver:10.5.0.15"
+      #- "spin-clouddriver:10.5.0.15"
       - "spin-deck:10.5.0.14"
       - "spin-echo:10.5.0.13"
       - "spin-front50:10.5.0.12"
@@ -44,7 +44,7 @@ services:
         ipv4_address: 10.5.0.14        
     extra_hosts:
       - "spin-clouddriver:10.5.0.15"
-      - "spin-deck:10.5.0.14"
+      #- "spin-deck:10.5.0.14"
       - "spin-echo:10.5.0.13"
       - "spin-front50:10.5.0.12"
       - "spin-gate:10.5.0.11"
@@ -76,7 +76,7 @@ services:
     extra_hosts:
       - "spin-clouddriver:10.5.0.15"
       - "spin-deck:10.5.0.14"
-      - "spin-echo:10.5.0.13"
+      #- "spin-echo:10.5.0.13"
       - "spin-front50:10.5.0.12"
       - "spin-gate:10.5.0.11"
       - "spin-igor:10.5.0.10"
@@ -107,7 +107,7 @@ services:
       - "spin-clouddriver:10.5.0.15"
       - "spin-deck:10.5.0.14"
       - "spin-echo:10.5.0.13"
-      - "spin-front50:10.5.0.12"
+      #- "spin-front50:10.5.0.12"
       - "spin-gate:10.5.0.11"
       - "spin-igor:10.5.0.10"
       - "spin-orca:10.5.0.9"
@@ -140,7 +140,7 @@ services:
       - "spin-deck:10.5.0.14"
       - "spin-echo:10.5.0.13"
       - "spin-front50:10.5.0.12"
-      - "spin-gate:10.5.0.11"
+      #- "spin-gate:10.5.0.11"
       - "spin-igor:10.5.0.10"
       - "spin-orca:10.5.0.9"
       - "spin-redis:10.5.0.8"
@@ -167,7 +167,7 @@ services:
       - "spin-echo:10.5.0.13"
       - "spin-front50:10.5.0.12"
       - "spin-gate:10.5.0.11"
-      - "spin-igor:10.5.0.10"
+      #- "spin-igor:10.5.0.10"
       - "spin-orca:10.5.0.9"
       - "spin-redis:10.5.0.8"
       - "spin-rosco:10.5.0.7"
@@ -202,7 +202,7 @@ services:
       - "spin-front50:10.5.0.12"
       - "spin-gate:10.5.0.11"
       - "spin-igor:10.5.0.10"
-      - "spin-orca:10.5.0.9"
+      #- "spin-orca:10.5.0.9"
       - "spin-redis:10.5.0.8"
       - "spin-rosco:10.5.0.7"
       - "spin-fiat:10.5.0.6"
@@ -225,7 +225,7 @@ services:
       - "spin-gate:10.5.0.11"
       - "spin-igor:10.5.0.10"
       - "spin-orca:10.5.0.9"
-      - "spin-redis:10.5.0.8"
+      #- "spin-redis:10.5.0.8"
       - "spin-rosco:10.5.0.7"
       - "spin-fiat:10.5.0.6"
       - "spin-mysql:10.5.0.5" 
@@ -255,7 +255,7 @@ services:
       - "spin-igor:10.5.0.10"
       - "spin-orca:10.5.0.9"
       - "spin-redis:10.5.0.8"
-      - "spin-rosco:10.5.0.7"
+      #- "spin-rosco:10.5.0.7"
       - "spin-fiat:10.5.0.6"
       - "spin-mysql:10.5.0.5" 
   spin-fiat:
@@ -282,7 +282,7 @@ services:
       - "spin-orca:10.5.0.9"
       - "spin-redis:10.5.0.8"
       - "spin-rosco:10.5.0.7"
-      - "spin-fiat:10.5.0.6"
+      #- "spin-fiat:10.5.0.6"
       - "spin-mysql:10.5.0.5" 
   spin-mysql:
     container_name: spin-mysql
@@ -312,7 +312,7 @@ services:
       - "spin-redis:10.5.0.8"
       - "spin-rosco:10.5.0.7"
       - "spin-fiat:10.5.0.6"
-      - "spin-mysql:10.5.0.5" 
+      #- "spin-mysql:10.5.0.5"
 networks:
   network:
     driver: bridge
