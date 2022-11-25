@@ -1,0 +1,146 @@
+services:
+  spin-clouddriver:
+    container_name: spin-clouddriver
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+    image: spinnaker/clouddriver
+    volumes:
+      - ./config/clouddriver.yml:/opt/spinnaker/config/clouddriver.yml
+      - ./config/spinnaker.yml:/opt/spinnaker/config/spinnaker.yml
+      - ./serviceaccount:/var/run/secrets/kubernetes.io/serviceaccount
+    links:
+      - spin-redis
+    ports:
+      - "7002:7002"
+  spin-deck:
+    container_name: spin-deck
+    environment:
+      - PROTOCOL=http
+      - AUTH_ENABLED=false
+      - FIAT_ENABLED=false
+      - API_HOST=http://192.168.33.2:8084
+    image: spinnaker/deck
+    volumes:
+      - ./config/settings.js:/opt/spinnaker/config/settings.js
+    ports:
+      - "9000:9000"
+  spin-echo:
+    container_name: spin-echo
+    environment:
+      #JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
+      #JAVA 11 remove UseCGroupMemoryLimitForHeap
+      JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:MaxRAMFraction=2
+      SPRING_PROFILES_ACTIVE: local
+    image: spinnaker/echo
+    volumes:
+      - ./config/echo.yml:/opt/spinnaker/config/echo.yml
+      - ./config/spinnaker.yml:/opt/spinnaker/config/spinnaker.yml
+    ports:
+      - "8089:8089"
+    links:
+      - spin-front50
+      - spin-orca
+  spin-front50:
+    container_name: spin-front50
+    environment:
+      #JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
+      #JAVA 11 remove UseCGroupMemoryLimitForHeap
+      JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:MaxRAMFraction=2
+    image: spinnaker/front50
+    volumes:
+      - ./config/front50.yml:/opt/spinnaker/config/front50.yml
+      - ./config/spinnaker.yml:/opt/spinnaker/config/spinnaker.yml
+    ports:
+      - "8080:8080"
+    links:
+      - spin-redis
+      - spin-mysql
+  spin-gate:
+    container_name: spin-gate
+    environment:
+      - "SPRING_PROFILES_ACTIVE=local"
+    image: spinnaker/gate
+    volumes:
+        - ./config/gate.yml:/opt/spinnaker/config/gate.yml
+        - ./config/spinnaker.yml:/opt/spinnaker/config/spinnaker.yml
+    links:
+      - spin-redis
+      - spin-clouddriver
+      - spin-echo
+      - spin-front50
+      - spin-orca
+      - spin-rosco
+    ports:
+      - "8084:8084"
+  spin-igor:
+    container_name: spin-igor
+    image: spinnaker/igor
+    links:
+      - spin-redis
+      - spin-echo
+    ports:
+      - "8088:8088"
+  spin-orca:
+    container_name: spin-orca
+    environment:
+      #JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
+      #JAVA 11 remove UseCGroupMemoryLimitForHeap
+      JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:MaxRAMFraction=2
+      SPRING_PROFILES_ACTIVE: local
+    image: spinnaker/orca
+    volumes:
+      - ./config/orca.yml:/opt/spinnaker/config/orca.yml
+      - ./config/spinnaker.yml:/opt/spinnaker/config/spinnaker.yml
+      - ./config/plugins.yml:/opt/spinnaker/config/plugins.yml
+    links:
+      - spin-redis
+      - spin-clouddriver
+      - spin-front50
+      - spin-rosco
+    ports:
+      - "8083:8083"
+  spin-redis:
+    container_name: spin-redis
+    image: redis:4.0.12-alpine
+    environment:
+      MASTER: true
+    ports:
+      - "6379:6379"
+  spin-rosco:
+    container_name: spin-rosco
+    image: spinnaker/rosco
+    volumes:
+      - ./config/rosco.yml:/opt/spinnaker/config/rosco.yml
+      - ./config/spinnaker.yml:/opt/spinnaker/config/spinnaker.yml
+    links:
+      - spin-redis
+    ports:
+      - "8087:8087"
+    environment:
+      #JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
+      #JAVA 11 remove UseCGroupMemoryLimitForHeap
+      JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:MaxRAMFraction=2
+  spin-fiat:
+    container_name: spin-fiat
+    image: spinnaker/fiat
+    volumes:
+      - ./config/spinnaker.yml:/opt/spinnaker/config/spinnaker.yml
+    links:
+      - spin-redis
+      - spin-clouddriver
+      - spin-front50
+    ports:
+      - "7003:7003"
+  spin-mysql:
+    container_name: spin-mysql
+    image: mysql:5.7.22
+    #    command: sh -c 'exec mysql -uroot --password=spinnaker' < sql/front50_mysql.sql
+    # command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+    #command: --init-file sql/front50_mysql.sql
+    volumes:
+      - ./sql/front50_mysql.sql:/docker-entrypoint-initdb.d/front50_mysql.sql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: spinnaker
+      TZ: Asia/Shanghai

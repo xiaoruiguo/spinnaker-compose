@@ -12,21 +12,21 @@ services:
       - spin-redis
     ports:
       - "7002:7002"
+    extra_hosts:
+            #      - "10.5.0.15:spin-clouddriver"
+      - "10.5.0.14:spin-deck"
+      - "10.5.0.13:spin-echo"
+      - "10.5.0.12:spin-front50"
+      - "10.5.0.11:spin-gate"
+      - "10.5.0.10:spin-igor"
+      - "10.5.0.9:spin-orca"
+      - "10.5.0.8:spin-redis"
+      - "10.5.0.7:spin-rosco"
+      - "10.5.0.6:spin-fiat"
+      - "10.5.0.5:spin-mysql"
     networks:
       network:
         ipv4_address: 10.5.0.15        
-    extra_hosts:
-      - "spin-clouddriver:10.5.0.15"
-      - "spin-deck:10.5.0.14"
-      - "spin-echo:10.5.0.13"
-      - "spin-front50:10.5.0.12"
-      - "spin-gate:10.5.0.11"
-      - "spin-igor:10.5.0.10"
-      - "spin-orca:10.5.0.9"
-      - "spin-redis:10.5.0.8"
-      - "spin-rosco:10.5.0.7"
-      - "spin-fiat:10.5.0.6"
-      - "spin-mysql:10.5.0.5" 
   spin-deck:
     container_name: spin-deck
     environment:
@@ -39,21 +39,21 @@ services:
       - ./config/settings.js:/opt/spinnaker/config/settings.js
     ports:
       - "9000:9000"
+    extra_hosts:
+      - "10.5.0.15:spin-clouddriver"
+        #- "10.5.0.14:spin-deck"
+      - "10.5.0.13:spin-echo"
+      - "10.5.0.12:spin-front50"
+      - "10.5.0.11:spin-gate"
+      - "10.5.0.10:spin-igor"
+      - "10.5.0.9:spin-orca"
+      - "10.5.0.8:spin-redis"
+      - "10.5.0.7:spin-rosco"
+      - "10.5.0.6:spin-fiat"
+      - "10.5.0.5:spin-mysql"
     networks:
       network:
         ipv4_address: 10.5.0.14        
-    extra_hosts:
-      - "spin-clouddriver:10.5.0.15"
-      - "spin-deck:10.5.0.14"
-      - "spin-echo:10.5.0.13"
-      - "spin-front50:10.5.0.12"
-      - "spin-gate:10.5.0.11"
-      - "spin-igor:10.5.0.10"
-      - "spin-orca:10.5.0.9"
-      - "spin-redis:10.5.0.8"
-      - "spin-rosco:10.5.0.7"
-      - "spin-fiat:10.5.0.6"
-      - "spin-mysql:10.5.0.5" 
   spin-echo:
     container_name: spin-echo
     environment:
@@ -70,21 +70,21 @@ services:
     links:
       - spin-front50
       - spin-orca
+    extra_hosts:
+      - "10.5.0.15:spin-clouddriver"
+      - "10.5.0.14:spin-deck"
+        #    - "10.5.0.13:spin-echo"
+      - "10.5.0.12:spin-front50"
+      - "10.5.0.11:spin-gate"
+      - "10.5.0.10:spin-igor"
+      - "10.5.0.9:spin-orca"
+      - "10.5.0.8:spin-redis"
+      - "10.5.0.7:spin-rosco"
+      - "10.5.0.6:spin-fiat"
+      - "10.5.0.5:spin-mysql"
     networks:
       network:
         ipv4_address: 10.5.0.13        
-    extra_hosts:
-      - "spin-clouddriver:10.5.0.15"
-      - "spin-deck:10.5.0.14"
-      - "spin-echo:10.5.0.13"
-      - "spin-front50:10.5.0.12"
-      - "spin-gate:10.5.0.11"
-      - "spin-igor:10.5.0.10"
-      - "spin-orca:10.5.0.9"
-      - "spin-redis:10.5.0.8"
-      - "spin-rosco:10.5.0.7"
-      - "spin-fiat:10.5.0.6"
-      - "spin-mysql:10.5.0.5" 
   spin-front50:
     container_name: spin-front50
     environment:
@@ -100,21 +100,21 @@ services:
     links:
       - spin-redis
       - spin-mysql
+    extra_hosts:
+      - "10.5.0.15:spin-clouddriver"
+      - "10.5.0.14:spin-deck"
+      - "10.5.0.13:spin-echo"
+        #- "10.5.0.12:spin-front50"
+      - "10.5.0.11:spin-gate"
+      - "10.5.0.10:spin-igor"
+      - "10.5.0.9:spin-orca"
+      - "10.5.0.8:spin-redis"
+      - "10.5.0.7:spin-rosco"
+      - "10.5.0.6:spin-fiat"
+      - "10.5.0.5:spin-mysql"
     networks:
       network:
         ipv4_address: 10.5.0.12        
-    extra_hosts:
-      - "spin-clouddriver:10.5.0.15"
-      - "spin-deck:10.5.0.14"
-      - "spin-echo:10.5.0.13"
-      - "spin-front50:10.5.0.12"
-      - "spin-gate:10.5.0.11"
-      - "spin-igor:10.5.0.10"
-      - "spin-orca:10.5.0.9"
-      - "spin-redis:10.5.0.8"
-      - "spin-rosco:10.5.0.7"
-      - "spin-fiat:10.5.0.6"
-      - "spin-mysql:10.5.0.5" 
   spin-gate:
     container_name: spin-gate
     environment:
@@ -132,21 +132,21 @@ services:
       - spin-rosco
     ports:
       - "8084:8084"
+    extra_hosts:
+      - "10.5.0.15:spin-clouddriver"
+      - "10.5.0.14:spin-deck"
+      - "10.5.0.13:spin-echo"
+      - "10.5.0.12:spin-front50"
+        #- "10.5.0.11:spin-gate"
+      - "10.5.0.10:spin-igor"
+      - "10.5.0.9:spin-orca"
+      - "10.5.0.8:spin-redis"
+      - "10.5.0.7:spin-rosco"
+      - "10.5.0.6:spin-fiat"
+      - "10.5.0.5:spin-mysql"
     networks:
       network:
         ipv4_address: 10.5.0.11        
-    extra_hosts:
-      - "spin-clouddriver:10.5.0.15"
-      - "spin-deck:10.5.0.14"
-      - "spin-echo:10.5.0.13"
-      - "spin-front50:10.5.0.12"
-      - "spin-gate:10.5.0.11"
-      - "spin-igor:10.5.0.10"
-      - "spin-orca:10.5.0.9"
-      - "spin-redis:10.5.0.8"
-      - "spin-rosco:10.5.0.7"
-      - "spin-fiat:10.5.0.6"
-      - "spin-mysql:10.5.0.5" 
   spin-igor:
     container_name: spin-igor
     image: spinnaker/igor
@@ -158,21 +158,21 @@ services:
       - spin-echo
     ports:
       - "8088:8088"
+    extra_hosts:
+      - "10.5.0.15:spin-clouddriver"
+      - "10.5.0.14:spin-deck"
+      - "10.5.0.13:spin-echo"
+      - "10.5.0.12:spin-front50"
+      - "10.5.0.11:spin-gate"
+        #- "10.5.0.10:spin-igor"
+      - "10.5.0.9:spin-orca"
+      - "10.5.0.8:spin-redis"
+      - "10.5.0.7:spin-rosco"
+      - "10.5.0.6:spin-fiat"
+      - "10.5.0.5:spin-mysql"
     networks:
       network:
         ipv4_address: 10.5.0.10        
-    extra_hosts:
-      - "spin-clouddriver:10.5.0.15"
-      - "spin-deck:10.5.0.14"
-      - "spin-echo:10.5.0.13"
-      - "spin-front50:10.5.0.12"
-      - "spin-gate:10.5.0.11"
-      - "spin-igor:10.5.0.10"
-      - "spin-orca:10.5.0.9"
-      - "spin-redis:10.5.0.8"
-      - "spin-rosco:10.5.0.7"
-      - "spin-fiat:10.5.0.6"
-      - "spin-mysql:10.5.0.5" 
   spin-orca:
     container_name: spin-orca
     environment:
@@ -192,21 +192,21 @@ services:
       - spin-rosco
     ports:
       - "8083:8083"
+    extra_hosts:
+      - "10.5.0.15:spin-clouddriver"
+      - "10.5.0.14:spin-deck"
+      - "10.5.0.13:spin-echo"
+      - "10.5.0.12:spin-front50"
+      - "10.5.0.11:spin-gate"
+      - "10.5.0.10:spin-igor"
+        #      - "10.5.0.9:spin-orca"
+      - "10.5.0.8:spin-redis"
+      - "10.5.0.7:spin-rosco"
+      - "10.5.0.6:spin-fiat"
+      - "10.5.0.5:spin-mysql"
     networks:
       network:
         ipv4_address: 10.5.0.9        
-    extra_hosts:
-      - "spin-clouddriver:10.5.0.15"
-      - "spin-deck:10.5.0.14"
-      - "spin-echo:10.5.0.13"
-      - "spin-front50:10.5.0.12"
-      - "spin-gate:10.5.0.11"
-      - "spin-igor:10.5.0.10"
-      - "spin-orca:10.5.0.9"
-      - "spin-redis:10.5.0.8"
-      - "spin-rosco:10.5.0.7"
-      - "spin-fiat:10.5.0.6"
-      - "spin-mysql:10.5.0.5" 
   spin-redis:
     container_name: spin-redis
     image: redis:4.0.12-alpine
@@ -214,21 +214,21 @@ services:
       MASTER: true
     ports:
       - "6379:6379"
+    extra_hosts:
+      - "10.5.0.15:spin-clouddriver"
+      - "10.5.0.14:spin-deck"
+      - "10.5.0.13:spin-echo"
+      - "10.5.0.12:spin-front50"
+      - "10.5.0.11:spin-gate"
+      - "10.5.0.10:spin-igor"
+      - "10.5.0.9:spin-orca"
+        #- "10.5.0.8:spin-redis"
+      - "10.5.0.7:spin-rosco"
+      - "10.5.0.6:spin-fiat"
+      - "10.5.0.5:spin-mysql"
     networks:
       network:
         ipv4_address: 10.5.0.8        
-    extra_hosts:
-      - "spin-clouddriver:10.5.0.15"
-      - "spin-deck:10.5.0.14"
-      - "spin-echo:10.5.0.13"
-      - "spin-front50:10.5.0.12"
-      - "spin-gate:10.5.0.11"
-      - "spin-igor:10.5.0.10"
-      - "spin-orca:10.5.0.9"
-      - "spin-redis:10.5.0.8"
-      - "spin-rosco:10.5.0.7"
-      - "spin-fiat:10.5.0.6"
-      - "spin-mysql:10.5.0.5" 
   spin-rosco:
     container_name: spin-rosco
     image: spinnaker/rosco
@@ -243,21 +243,21 @@ services:
       #JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
       #JAVA 11 remove UseCGroupMemoryLimitForHeap
       JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:MaxRAMFraction=2
+    extra_hosts:
+      - "10.5.0.15:spin-clouddriver"
+      - "10.5.0.14:spin-deck"
+      - "10.5.0.13:spin-echo"
+      - "10.5.0.12:spin-front50"
+      - "10.5.0.11:spin-gate"
+      - "10.5.0.10:spin-igor"
+      - "10.5.0.9:spin-orca"
+      - "10.5.0.8:spin-redis"
+        # - "10.5.0.7:spin-rosco"
+      - "10.5.0.6:spin-fiat"
+      - "10.5.0.5:spin-mysql"
     networks:
       network:
         ipv4_address: 10.5.0.7        
-    extra_hosts:
-      - "spin-clouddriver:10.5.0.15"
-      - "spin-deck:10.5.0.14"
-      - "spin-echo:10.5.0.13"
-      - "spin-front50:10.5.0.12"
-      - "spin-gate:10.5.0.11"
-      - "spin-igor:10.5.0.10"
-      - "spin-orca:10.5.0.9"
-      - "spin-redis:10.5.0.8"
-      - "spin-rosco:10.5.0.7"
-      - "spin-fiat:10.5.0.6"
-      - "spin-mysql:10.5.0.5" 
   spin-fiat:
     container_name: spin-fiat
     image: spinnaker/fiat
@@ -269,21 +269,21 @@ services:
       - spin-front50
     ports:
       - "7003:7003"
+    extra_hosts:
+      - "10.5.0.15:spin-clouddriver"
+      - "10.5.0.14:spin-deck"
+      - "10.5.0.13:spin-echo"
+      - "10.5.0.12:spin-front50"
+      - "10.5.0.11:spin-gate"
+      - "10.5.0.10:spin-igor"
+      - "10.5.0.9:spin-orca"
+      - "10.5.0.8:spin-redis"
+      - "10.5.0.7:spin-rosco"
+        #- "10.5.0.6:spin-fiat"
+      - "10.5.0.5:spin-mysql"
     networks:
       network:
         ipv4_address: 10.5.0.6        
-    extra_hosts:
-      - "spin-clouddriver:10.5.0.15"
-      - "spin-deck:10.5.0.14"
-      - "spin-echo:10.5.0.13"
-      - "spin-front50:10.5.0.12"
-      - "spin-gate:10.5.0.11"
-      - "spin-igor:10.5.0.10"
-      - "spin-orca:10.5.0.9"
-      - "spin-redis:10.5.0.8"
-      - "spin-rosco:10.5.0.7"
-      - "spin-fiat:10.5.0.6"
-      - "spin-mysql:10.5.0.5" 
   spin-mysql:
     container_name: spin-mysql
     image: mysql:5.7.22
@@ -297,21 +297,21 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: spinnaker
       TZ: Asia/Shanghai
+    extra_hosts:
+      - "10.5.0.15:spin-clouddriver"
+      - "10.5.0.14:spin-deck"
+      - "10.5.0.13:spin-echo"
+      - "10.5.0.12:spin-front50"
+      - "10.5.0.11:spin-gate"
+      - "10.5.0.10:spin-igor"
+      - "10.5.0.9:spin-orca"
+      - "10.5.0.8:spin-redis"
+      - "10.5.0.7:spin-rosco"
+      - "10.5.0.6:spin-fiat"
+        #- "10.5.0.5:spin-mysql"
     networks:
       network:
         ipv4_address: 10.5.0.5
-    extra_hosts:
-      - "spin-clouddriver:10.5.0.15"
-      - "spin-deck:10.5.0.14"
-      - "spin-echo:10.5.0.13"
-      - "spin-front50:10.5.0.12"
-      - "spin-gate:10.5.0.11"
-      - "spin-igor:10.5.0.10"
-      - "spin-orca:10.5.0.9"
-      - "spin-redis:10.5.0.8"
-      - "spin-rosco:10.5.0.7"
-      - "spin-fiat:10.5.0.6"
-      - "spin-mysql:10.5.0.5" 
 networks:
   network:
     driver: bridge

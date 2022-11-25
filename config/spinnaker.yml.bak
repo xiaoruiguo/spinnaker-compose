@@ -89,3 +89,4 @@ services:
     port: 8008
     baseUrl: http://spin-monitoring-daemon:8008
     enabled: false
+

@@ -1,0 +1,5 @@
+bitbucket:
+  baseUrl: "https://api.bitbucket.org"
+  username: 'xiaoruiguo'
+  password: 's0e1a2n3'
+  commitDisplayLength: 7
