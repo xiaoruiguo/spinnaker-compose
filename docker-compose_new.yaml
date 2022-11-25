@@ -10,8 +10,23 @@ services:
       - ./serviceaccount:/var/run/secrets/kubernetes.io/serviceaccount
     links:
       - spin-redis
+    extra_hosts:
+      - "spin-clouddriver:10.5.0.15"
+      - "spin-deck:10.5.0.14"
+      - "spin-echo:10.5.0.13"
+      - "spin-front50:10.5.0.12"
+      - "spin-gate:10.5.0.11"
+      - "spin-igor:10.5.0.10"
+      - "spin-orca:10.5.0.9"
+      - "spin-redis:10.5.0.8"
+      - "spin-rosco:10.5.0.7"
+      - "spin-fiat:10.5.0.6"
+      - "spin-mysql:10.5.0.5"
     ports:
       - "7002:7002"
+    networks:
+      network:
+        ipv4_address: 10.5.0.15
   spin-deck:
     container_name: spin-deck
     environment:
@@ -23,10 +38,15 @@ services:
       - ./config/settings.js:/opt/spinnaker/config/settings.js
     ports:
       - "9000:9000"
+    networks:
+      network:
+        ipv4_address: 10.5.0.14
   spin-echo:
     container_name: spin-echo
     environment:
-      JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
+      #JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
+      #JAVA 11 remove UseCGroupMemoryLimitForHeap
+      JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:MaxRAMFraction=2
       SPRING_PROFILES_ACTIVE: local
     image: gcr.io/spinnaker-marketplace/echo:2.7.0-20190904112813
     volumes:
@@ -37,10 +57,15 @@ services:
     links:
       - spin-front50
       - spin-orca
+    networks:
+      network:
+        ipv4_address: 10.5.0.13
   spin-front50:
     container_name: spin-front50
     environment:
-      JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
+      #JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
+      #JAVA 11 remove UseCGroupMemoryLimitForHeap
+      JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:MaxRAMFraction=2
     image: gcr.io/spinnaker-marketplace/front50:0.19.0-20190904130744
     volumes:
       - ./config/front50.yml:/opt/spinnaker/config/front50.yml
@@ -50,6 +75,9 @@ services:
     links
       - spin-mysql
       - spin-redis
+    networks:
+      network:
+        ipv4_address: 10.5.0.12
   spin-gate:
     container_name: spin-gate
     environment:
@@ -67,6 +95,9 @@ services:
       - spin-rosco
     ports:
       - "8084:8084"
+    networks:
+      network:
+        ipv4_address: 10.5.0.11
   spin-igor:
     container_name: spin-igor
     image: gcr.io/spinnaker-marketplace/igor:1.5.0-20190904130744
@@ -75,10 +106,15 @@ services:
       - spin-echo
     ports:
       - "8088:8088"
+    networks:
+      network:
+        ipv4_address: 10.5.0.10
   spin-orca:
     container_name: spin-orca
     environment:
-      JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
+      #JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
+      #JAVA 11 remove UseCGroupMemoryLimitForHeap
+      JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:MaxRAMFraction=2
       SPRING_PROFILES_ACTIVE: local
     image: gcr.io/spinnaker-marketplace/orca:2.9.0-20190904130744
     volumes:
@@ -92,6 +128,9 @@ services:
       - spin-rosco
     ports:
       - "8083:8083"
+    networks:
+      network:
+        ipv4_address: 10.5.0.9
   spin-redis:
     container_name: spin-redis
     image: gcr.io/kubernetes-spinnaker/redis-cluster:v2
@@ -99,6 +138,9 @@ services:
       - "MASTER=true"
     ports:
       - "6379:6379"
+    networks:
+      network:
+        ipv4_address: 10.5.0.8
   spin-rosco:
     container_name: spin-rosco
     image: gcr.io/spinnaker-marketplace/rosco:0.14.0-20190904130744
@@ -110,7 +152,12 @@ services:
     ports:
       - "8087:8087"
     environment:
-      JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
+      #JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2
+      #JAVA 11 remove UseCGroupMemoryLimitForHeap
+      JAVA_OPTS: -XX:+UnlockExperimentalVMOptions -XX:MaxRAMFraction=2
+    networks:
+      network:
+        ipv4_address: 10.5.0.7
   spin-fiat:
     container_name: spin-fiat
     image: gcr.io/spinnaker-marketplace/fiat:1.7.0-20190904130744
@@ -122,6 +169,9 @@ services:
       - spin-front50
     ports:
       - "7003:7003"
+    networks:
+      network:
+        ipv4_address: 10.5.0.6
   spin-mysql:
     container_name: spin-mysql
     image: mysql:5.7.22
@@ -134,3 +184,13 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: spinnaker
       TZ: Asia/Shanghai
+    networks:
+      network:
+        ipv4_address: 10.5.0.5
+  networks:
+    network:
+      driver: bridge
+      ipam:
+        config:
+          - subnet: 10.5.0.0/16
+            gateway: 10.5.0.1

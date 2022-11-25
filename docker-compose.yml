@@ -292,6 +292,7 @@ services:
     #command: --init-file sql/front50_mysql.sql
     volumes:
       - ./sql/front50_mysql.sql:/docker-entrypoint-initdb.d/front50_mysql.sql
+      - ./config/my.cnf:/etc/mysql/my.cnf
     ports:
       - "3306:3306"
     environment:
