@@ -19,17 +19,32 @@ spinnaker:
     port: 6379
     enabled: true
 
+#sql:
+#  enabled: true
+#  connectionPools:
+#    default:
+#      default: true
+#      jdbcUrl: jdbc:mysql://spin-mysql:3306/front50
+#      user: root
+#      password: spinnaker
+#  migration:
+#    user: root
+#    password: spinnaker
+#    jdbcUrl: jdbc:mysql://spin-mysql:3306/front50
+
 sql:
   enabled: true
   connectionPools:
     default:
+      # additional connection pool parameters are available here,
+      # for more detail and to view defaults, see:
+      # https://github.com/spinnaker/kork/blob/master/kork-sql/src/main/kotlin/com/netflix/spinnaker/kork/sql/config/ConnectionPoolProperties.kt
       default: true
       jdbcUrl: jdbc:mysql://spin-mysql:3306/front50
-      user: root
-      password: spinnaker
+      user: front50_service
+      # password: depending on db auth and how spinnaker secrets are managed
   migration:
-    user: root
-    password: spinnaker
+    user: front50_migrate
     jdbcUrl: jdbc:mysql://spin-mysql:3306/front50
 
 server:
