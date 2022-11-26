@@ -287,7 +287,7 @@ services:
       - "spin-mysql:10.5.0.5" 
   spin-mysql:
     container_name: spin-mysql
-    image: mysql:5.7.22
+    image: mysql:5.7
     #    command: sh -c 'exec mysql -uroot --password=spinnaker' < sql/front50_mysql.sql
     # command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     #command: --init-file sql/front50_mysql.sql
